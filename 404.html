@@ -1,11 +1,77 @@
-<p>Mohon maaf, terjadi kesalahan pada server saat memproses permintaan Anda.</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Terganggu: VM Down</title>
+</head>
+<body>
 
-<p><strong>Apa artinya?</strong></p> <ul> <li>Server mengalami kondisi tak terduga yang mencegahnya untuk memenuhi permintaan Anda.</li> <li>Kesalahan ini terjadi di sisi server, bukan karena masalah pada perangkat atau koneksi internet Anda.</li> </ul>
+    <header>
+        <h1>⚠️ Layanan Terganggu (Service Interruption)</h1>
+    </header>
 
-<p><strong>Langkah selanjutnya yang bisa Anda lakukan:</strong></p> <ol> <li>Coba muat ulang halaman ini dalam beberapa menit. (Kemungkinan masalah sementara)</li> <li>Jika Anda terus melihat pesan ini, silakan laporkan masalah tersebut kepada administrator situs.</li> </ol>
+    <hr>
 
-<p> <strong>Detail Teknis (Untuk Administrator):</strong> <pre> Error Code: 500 Type: Internal Server Error Timestamp: [Server akan mengisi waktu kejadian di sini] Request ID: [Server akan mengisi ID unik di sini] </pre> </p>
+    <section>
+        <h2>Kesalahan Kritis: Gangguan Virtual Machine (VM)</h2>
+        <p>Mohon maaf, saat ini kami mengalami **masalah tak terduga pada salah satu Virtual Machine (VM)** kami, yang menyebabkan layanan menjadi tidak tersedia. Tim teknis kami telah siaga penuh dan sedang berupaya memulihkan layanan secepat mungkin.</p>
 
-<p><a href="https://brianofficial.spacestore.dpdns.org">Klik di sini untuk kembali ke Halaman Utama.</a></p>
+        <h3>Apa yang Sedang Terjadi?</h3>
+        <ul>
+            <li>Status: **Investigasi / Pemulihan Berlangsung**</li>
+            <li>Kemungkinan Penyebab: Kegagalan sumber daya, kerusakan disk, atau masalah jaringan.</li>
+        </ul>
+    </section>
 
-<hr>
+    <hr>
+
+    <section>
+        <h3>Langkah Selanjutnya (Bagi Anda)</h3>
+        <p>Tidak ada tindakan yang diperlukan dari pihak Anda. Silakan coba langkah-langkah berikut:</p>
+        <ol>
+            <li>Tunggu selama **5-10 menit** dan coba **Muat Ulang Halaman** ini.</li>
+            <li>Jika masalah berlanjut, pantau pembaruan status kami melalui tautan dukungan.</li>
+        </ol>
+        <p><a href="/status">Lihat Halaman Status Real-time</a></p>
+    </section>
+
+    <hr>
+
+    <footer>
+        <h4>Detail Teknis Kejadian</h4>
+        <p>Waktu Kejadian Lokal Anda: <strong id="timestamp">Memuat Waktu...</strong></p>
+        <p>Kode Internal: **VM_FAILURE_500**</p>
+    </footer>
+
+    <script>
+        // Fungsi untuk mengambil waktu saat ini, memformatnya, dan menampilkannya di halaman
+        function updateTimestamp() {
+            // Membuat objek Date baru (waktu saat ini di zona waktu pengguna)
+            const now = new Date();
+
+            // Opsi format untuk tanggal dan waktu yang lebih mudah dibaca
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                // Menambahkan zona waktu pengguna
+                timeZoneName: 'short'
+            };
+
+            // Memformat tanggal/waktu ke string lokal
+            const formattedTime = now.toLocaleTimeString('id-ID', options);
+
+            // Menemukan elemen dengan ID "timestamp" dan memperbarui isinya
+            document.getElementById('timestamp').textContent = formattedTime;
+        }
+
+        // Memanggil fungsi saat halaman selesai dimuat
+        updateTimestamp();
+    </script>
+
+</body>
+</html>
