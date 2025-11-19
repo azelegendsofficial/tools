@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Tools - Free Download Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent: #dc2626;
+            --accent-hover: #ef4444;
+            --accent-glow: rgba(220, 38, 38, 0.15);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(220, 38, 38, 0.3);
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence baseFrequency="0.9" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03"/></svg>');
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(220, 38, 38, 0.08), transparent),
+                radial-gradient(ellipse 60% 50% at 50% 120%, rgba(220, 38, 38, 0.06), transparent);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #991b1b);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
+        }
+
+        .hero {
+            padding: 150px 2rem 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.03em;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 100px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-container:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #991b1b);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .tool-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .tool-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--border-hover);
+            background: var(--bg-secondary);
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .result-container {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--bg-tertiary);
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .result-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .download-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert.error {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+        }
+
+        .alert.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 120px 1.5rem 60px;
+            }
+
+            .tool-container {
+                padding: 1.5rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="gradient-bg"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🛠️</div>
+                Space Tools
+            </a>
+            <a href="#" class="back-btn">
+                <span>←</span>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Free Download Tools</h1>
+        <p>Download media dari berbagai platform social media dengan API real</p>
+    </section>
+
+    <section class="tools-section">
+        <div class="tools-grid">
+            
+            <!-- Instagram Downloader -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">📸</div>
+                    <div class="tool-info">
+                        <h2>Instagram Downloader</h2>
+                        <p>Download stories, posts, reels & profile</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="ig-url">Instagram URL</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="ig-url" 
+                            placeholder="https://www.instagram.com/p/..."
+                        >
+                        <button class="btn" onclick="downloadInstagram()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="ig-result" class="result-container"></div>
+                <div id="ig-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>HD Quality</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>No Watermark</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Fast Download</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TikTok Downloader -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">🎵</div>
+                    <div class="tool-info">
+                        <h2>TikTok Downloader</h2>
+                        <p>Download video tanpa watermark</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="tiktok-url">TikTok URL</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="tiktok-url" 
+                            placeholder="https://www.tiktok.com/@username/video/..."
+                        >
+                        <button class="btn" onclick="downloadTikTok()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="tiktok-result" class="result-container"></div>
+                <div id="tiktok-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>No Watermark</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>MP3 Audio</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Full HD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- YouTube Downloader -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">📺</div>
+                    <div class="tool-info">
+                        <h2>YouTube Downloader</h2>
+                        <p>Download video & audio dari YouTube</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="youtube-url">YouTube URL</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="youtube-url" 
+                            placeholder="https://www.youtube.com/watch?v=..."
+                        >
+                        <button class="btn" onclick="downloadYouTube()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="youtube-result" class="result-container"></div>
+                <div id="youtube-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Multiple Formats</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>MP3/MP4</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>4K Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Twitter Media Saver -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">💬</div>
+                    <div class="tool-info">
+                        <h2>Twitter Media Saver</h2>
+                        <p>Simpan gambar & video dari Twitter/X</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="twitter-url">Twitter/X URL</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="twitter-url" 
+                            placeholder="https://twitter.com/username/status/..."
+                        >
+                        <button class="btn" onclick="downloadTwitter()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="twitter-result" class="result-container"></div>
+                <div id="twitter-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>HD Quality</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>GIF Support</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Multi Media</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facebook Video Downloader -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">🎬</div>
+                    <div class="tool-info">
+                        <h2>Facebook Video Downloader</h2>
+                        <p>Download video Facebook berbagai kualitas</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="facebook-url">Facebook URL</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="facebook-url" 
+                            placeholder="https://www.facebook.com/watch?v=..."
+                        >
+                        <button class="btn" onclick="downloadFacebook()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="facebook-result" class="result-container"></div>
+                <div id="facebook-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>HD/SD Quality</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Fast Speed</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>No Login</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Downloader -->
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-icon">📱</div>
+                    <div class="tool-info">
+                        <h2>Story Downloader</h2>
+                        <p>Download stories dari berbagai platform</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="story-username">Username Instagram</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="story-username" 
+                            placeholder="username"
+                        >
+                        <button class="btn" onclick="downloadStory()">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="story-result" class="result-container"></div>
+                <div id="story-alert" class="alert"></div>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Anonymous</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>All Stories</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Original Quality</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024-2025 Space Tools. All Rights Reserved.</p>
+        <p>Free download tools for everyone</p>
+        <p class="footer-highlight">Powered by SPACE STORE INDONESIA</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+    <script>
+        // Utility functions
+        function showAlert(id, message, type) {
+            const alert = document.getElementById(id);
+            alert.className = `alert ${type} show`;
+            alert.textContent = message;
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+
+        function setLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = '<div class="spinner"></div><span>Processing...</span>';
+            } else {
+                button.disabled = false;
+                button.innerHTML = '<span>Download</span>';
+            }
+        }
+
+        function getButtonFromEvent(event) {
+            return event.target.closest('button');
+        }
+
+        // Instagram Downloader - Using real API
+        async function downloadInstagram() {
+            const input = document.getElementById('ig-url');
+            const url = input.value.trim();
+            const button = getButtonFromEvent(event);
+            
+            if (!url) {
+                showAlert('ig-alert', 'Masukkan URL Instagram terlebih dahulu', 'error');
+                return;
+            }
+
+            if (!url.includes('instagram.com')) {
+                showAlert('ig-alert', 'URL tidak valid! Gunakan URL Instagram yang benar', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/ig?url=${encodeURIComponent(url)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data) {
+                    const data = response.data.data;
+                    const result = document.getElementById('ig-result');
+                    
+                    let html = '';
+                    if (data.length > 0) {
+                        data.forEach((item, index) => {
+                            const isVideo = item.type === 'video';
+                            html += `
+                                <div class="result-item">
+                                    <img src="${item.thumbnail || item.url}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                    <div class="result-info">
+                                        <h4>${isVideo ? 'Video' : 'Photo'} ${index + 1}</h4>
+                                        <p>${isVideo ? 'MP4 Video' : 'High Quality Image'}</p>
+                                    </div>
+                                    <a href="${item.url}" class="download-btn" download target="_blank">Download</a>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html = `
+                            <div class="result-item">
+                                <img src="${data.thumbnail || data.url}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Instagram Media</h4>
+                                    <p>Ready to download</p>
+                                </div>
+                                <a href="${data.url}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('ig-alert', 'Media berhasil ditemukan!', 'success');
+                } else {
+                    throw new Error('Gagal memproses URL');
+                }
+            } catch (error) {
+                showAlert('ig-alert', 'Terjadi kesalahan. Pastikan URL valid dan coba lagi.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // TikTok Downloader - Using real API
+        async function downloadTikTok() {
+            const input = document.getElementById('tiktok-url');
+            const url = input.value.trim();
+            const button = getButtonFromEvent(event);
+            
+            if (!url) {
+                showAlert('tiktok-alert', 'Masukkan URL TikTok terlebih dahulu', 'error');
+                return;
+            }
+
+            if (!url.includes('tiktok.com')) {
+                showAlert('tiktok-alert', 'URL tidak valid! Gunakan URL TikTok yang benar', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/tiktok?url=${encodeURIComponent(url)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data) {
+                    const data = response.data.data;
+                    const result = document.getElementById('tiktok-result');
+                    
+                    let html = '';
+                    
+                    // Video without watermark
+                    if (data.video && data.video.noWatermark) {
+                        html += `
+                            <div class="result-item">
+                                <img src="${data.thumbnail}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Video (No Watermark)</h4>
+                                    <p>${data.title ? data.title.substring(0, 50) + '...' : 'TikTok Video'}</p>
+                                </div>
+                                <a href="${data.video.noWatermark}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    // Audio
+                    if (data.music && data.music.url) {
+                        html += `
+                            <div class="result-item">
+                                <img src="${data.thumbnail}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Audio Only (MP3)</h4>
+                                    <p>${data.music.title || 'Original Sound'}</p>
+                                </div>
+                                <a href="${data.music.url}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('tiktok-alert', 'Video berhasil diproses!', 'success');
+                } else {
+                    throw new Error('Gagal memproses URL');
+                }
+            } catch (error) {
+                showAlert('tiktok-alert', 'Terjadi kesalahan. Pastikan URL valid dan coba lagi.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // YouTube Downloader - Using real API
+        async function downloadYouTube() {
+            const input = document.getElementById('youtube-url');
+            const url = input.value.trim();
+            const button = getButtonFromEvent(event);
+            
+            if (!url) {
+                showAlert('youtube-alert', 'Masukkan URL YouTube terlebih dahulu', 'error');
+                return;
+            }
+
+            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+                showAlert('youtube-alert', 'URL tidak valid! Gunakan URL YouTube yang benar', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/yt?url=${encodeURIComponent(url)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data) {
+                    const data = response.data.data;
+                    const result = document.getElementById('youtube-result');
+                    
+                    let html = '';
+                    
+                    // Video formats
+                    if (data.video) {
+                        Object.keys(data.video).forEach((quality) => {
+                            if (data.video[quality] && data.video[quality].url) {
+                                html += `
+                                    <div class="result-item">
+                                        <img src="${data.thumbnail}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                        <div class="result-info">
+                                            <h4>Video ${quality.toUpperCase()}</h4>
+                                            <p>${data.title ? data.title.substring(0, 50) + '...' : 'YouTube Video'}</p>
+                                        </div>
+                                        <a href="${data.video[quality].url}" class="download-btn" download target="_blank">Download</a>
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                    
+                    // Audio format
+                    if (data.audio && data.audio.url) {
+                        html += `
+                            <div class="result-item">
+                                <img src="${data.thumbnail}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Audio Only (MP3)</h4>
+                                    <p>${data.title ? data.title.substring(0, 50) + '...' : 'YouTube Audio'}</p>
+                                </div>
+                                <a href="${data.audio.url}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('youtube-alert', 'Video berhasil diproses!', 'success');
+                } else {
+                    throw new Error('Gagal memproses URL');
+                }
+            } catch (error) {
+                showAlert('youtube-alert', 'Terjadi kesalahan. Pastikan URL valid dan coba lagi.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // Twitter Downloader - Using real API
+        async function downloadTwitter() {
+            const input = document.getElementById('twitter-url');
+            const url = input.value.trim();
+            const button = getButtonFromEvent(event);
+            
+            if (!url) {
+                showAlert('twitter-alert', 'Masukkan URL Twitter terlebih dahulu', 'error');
+                return;
+            }
+
+            if (!url.includes('twitter.com') && !url.includes('x.com')) {
+                showAlert('twitter-alert', 'URL tidak valid! Gunakan URL Twitter/X yang benar', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/twitter?url=${encodeURIComponent(url)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data) {
+                    const data = response.data.data;
+                    const result = document.getElementById('twitter-result');
+                    
+                    let html = '';
+                    
+                    if (Array.isArray(data)) {
+                        data.forEach((item, index) => {
+                            html += `
+                                <div class="result-item">
+                                    <img src="${item.thumb || item.url}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                    <div class="result-info">
+                                        <h4>${item.type === 'video' ? 'Video' : 'Media'} ${index + 1}</h4>
+                                        <p>${item.quality || 'High Quality'}</p>
+                                    </div>
+                                    <a href="${item.url}" class="download-btn" download target="_blank">Download</a>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html = `
+                            <div class="result-item">
+                                <img src="${data.thumb || data.url}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Twitter Media</h4>
+                                    <p>${data.quality || 'High Quality'}</p>
+                                </div>
+                                <a href="${data.url}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('twitter-alert', 'Media berhasil ditemukan!', 'success');
+                } else {
+                    throw new Error('Gagal memproses URL');
+                }
+            } catch (error) {
+                showAlert('twitter-alert', 'Terjadi kesalahan. Pastikan URL valid dan coba lagi.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // Facebook Downloader - Using real API
+        async function downloadFacebook() {
+            const input = document.getElementById('facebook-url');
+            const url = input.value.trim();
+            const button = getButtonFromEvent(event);
+            
+            if (!url) {
+                showAlert('facebook-alert', 'Masukkan URL Facebook terlebih dahulu', 'error');
+                return;
+            }
+
+            if (!url.includes('facebook.com') && !url.includes('fb.watch')) {
+                showAlert('facebook-alert', 'URL tidak valid! Gunakan URL Facebook yang benar', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/fb?url=${encodeURIComponent(url)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data) {
+                    const data = response.data.data;
+                    const result = document.getElementById('facebook-result');
+                    
+                    let html = '';
+                    
+                    // HD Quality
+                    if (data.hd) {
+                        html += `
+                            <div class="result-item">
+                                <img src="${data.thumbnail || 'data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Video HD</h4>
+                                    <p>${data.title ? data.title.substring(0, 50) + '...' : 'High Definition'}</p>
+                                </div>
+                                <a href="${data.hd}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    // SD Quality
+                    if (data.sd) {
+                        html += `
+                            <div class="result-item">
+                                <img src="${data.thumbnail || 'data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Video SD</h4>
+                                    <p>${data.title ? data.title.substring(0, 50) + '...' : 'Standard Definition'}</p>
+                                </div>
+                                <a href="${data.sd}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    }
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('facebook-alert', 'Video berhasil ditemukan!', 'success');
+                } else {
+                    throw new Error('Gagal memproses URL');
+                }
+            } catch (error) {
+                showAlert('facebook-alert', 'Terjadi kesalahan. Pastikan URL valid dan coba lagi.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // Instagram Story Downloader - Using real API
+        async function downloadStory() {
+            const input = document.getElementById('story-username');
+            const username = input.value.trim().replace('@', '');
+            const button = getButtonFromEvent(event);
+            
+            if (!username) {
+                showAlert('story-alert', 'Masukkan username Instagram terlebih dahulu', 'error');
+                return;
+            }
+
+            setLoading(button, true);
+
+            try {
+                const response = await axios.get(`https://api.neoxr.eu/api/igstory?username=${encodeURIComponent(username)}&apikey=neoxr`);
+                
+                if (response.data.status && response.data.data && response.data.data.length > 0) {
+                    const stories = response.data.data;
+                    const result = document.getElementById('story-result');
+                    
+                    let html = '';
+                    
+                    stories.forEach((story, index) => {
+                        const isVideo = story.type === 'video' || story.url.includes('.mp4');
+                        html += `
+                            <div class="result-item">
+                                <img src="${story.thumbnail || story.url}" class="result-thumbnail" alt="thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                                <div class="result-info">
+                                    <h4>Story ${index + 1} ${isVideo ? '(Video)' : '(Photo)'}</h4>
+                                    <p>@${username}</p>
+                                </div>
+                                <a href="${story.url}" class="download-btn" download target="_blank">Download</a>
+                            </div>
+                        `;
+                    });
+                    
+                    result.innerHTML = html;
+                    result.classList.add('show');
+                    showAlert('story-alert', `Ditemukan ${stories.length} story dari @${username}`, 'success');
+                } else {
+                    showAlert('story-alert', 'Username tidak ditemukan atau tidak ada story aktif', 'error');
+                }
+            } catch (error) {
+                showAlert('story-alert', 'Terjadi kesalahan. Pastikan username valid dan memiliki story aktif.', 'error');
+                console.error('Error:', error);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // Handle Enter key press
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const button = this.parentElement.querySelector('button');
+                    if (button) button.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
